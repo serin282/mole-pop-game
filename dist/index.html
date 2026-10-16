@@ -24,12 +24,14 @@
     .hole{position:relative;aspect-ratio:1.22/1;border:0;background:transparent;padding:0;cursor:pointer;overflow:hidden;touch-action:manipulation}
     .hole:focus-visible{outline:4px solid #fff;outline-offset:3px;border-radius:45%}
     .dirt{position:absolute;left:5%;right:5%;bottom:3%;height:42%;border-radius:50%;background:#4a2a25;box-shadow:inset 0 9px 0 #321c1a,0 8px 0 #86523a,0 12px 8px #487f3944;z-index:1}
-    .mole{position:absolute;z-index:2;width:72%;height:89%;left:14%;bottom:-88%;border-radius:48% 48% 42% 42%;background:linear-gradient(145deg,#a77550,#7d4c35);border:4px solid #68422f;transition:bottom .2s cubic-bezier(.2,1.4,.5,1),transform .14s,opacity .14s;pointer-events:none;filter:drop-shadow(0 5px 3px #30492244)}
+    .mole{position:absolute;z-index:2;width:72%;height:89%;left:14%;bottom:-88%;border-radius:50% 50% 38% 38%;background:linear-gradient(145deg,#9a6849 0 55%,#70432f 100%);border:4px solid #5f3b2c;transition:bottom .2s cubic-bezier(.2,1.4,.5,1),transform .14s,opacity .14s;pointer-events:none;filter:drop-shadow(0 5px 3px #30492244)}
     .active .mole{bottom:12%}.hit .mole{transform:scale(.55) rotate(10deg);opacity:0}
-    .mole:before,.mole:after{content:"";position:absolute;top:8%;width:27%;aspect-ratio:1;border-radius:50%;background:#97684b;border:4px solid #68422f;z-index:-1}.mole:before{left:-9%}.mole:after{right:-9%}
-    .face{position:absolute;inset:0}.eyes:before,.eyes:after{content:"";position:absolute;top:31%;width:13%;aspect-ratio:1;border-radius:50%;background:#30221e;box-shadow:inset 3px 3px #fff}.eyes:before{left:24%}.eyes:after{right:24%}
-    .snout{position:absolute;width:44%;height:34%;left:28%;top:43%;border-radius:50%;background:#d79e7d}
-    .nose{position:absolute;width:38%;height:28%;left:31%;top:10%;border-radius:50%;background:#4b2d2c}.mouth{position:absolute;left:50%;top:39%;width:18%;height:24%;border-left:3px solid #633936;border-bottom:3px solid #633936;border-radius:0 0 0 100%;transform:translateX(-1px)}
+    .mole:before,.mole:after{content:"";position:absolute;top:9%;width:23%;aspect-ratio:1;border-radius:50%;background:#b77d69;border:4px solid #5f3b2c;z-index:-1;box-shadow:inset 0 0 0 5px #d99b8a}.mole:before{left:-7%}.mole:after{right:-7%}
+    .face{position:absolute;inset:0}.eyes:before,.eyes:after{content:"";position:absolute;top:30%;width:12%;aspect-ratio:1;border-radius:50%;background:#241b19;box-shadow:inset 3px 3px #fff}.eyes:before{left:24%}.eyes:after{right:24%}
+    .snout{position:absolute;width:54%;height:38%;left:23%;top:40%;border-radius:48% 48% 55% 55%;background:linear-gradient(#dca78a,#c98e75)}
+    .nose{position:absolute;width:32%;height:24%;left:34%;top:8%;border-radius:55% 55% 48% 48%;background:#49302f;box-shadow:inset 0 3px #704a48}.mouth{position:absolute;left:50%;top:34%;width:20%;height:22%;border-left:3px solid #633936;border-bottom:3px solid #633936;border-radius:0 0 0 100%;transform:translateX(-1px)}
+    .teeth{position:absolute;left:38%;top:57%;width:24%;height:24%;display:flex;gap:2px}.teeth:before,.teeth:after{content:"";flex:1;background:#fffdf1;border:2px solid #a98572;border-radius:2px 2px 5px 5px}.whiskers:before,.whiskers:after{content:"";position:absolute;top:57%;width:31%;height:2px;background:#6d4b40;box-shadow:0 7px #6d4b40}.whiskers:before{left:-15%;transform:rotate(8deg)}.whiskers:after{right:-15%;transform:rotate(-8deg)}
+    .paws:before,.paws:after{content:"";position:absolute;bottom:5%;width:29%;height:22%;border-radius:50% 50% 42% 42%;background:#c88b70;border:3px solid #644131;box-shadow:inset 0 -4px #ad725c}.paws:before{left:5%;transform:rotate(12deg)}.paws:after{right:5%;transform:rotate(-12deg)}
     .mole.gold{background:linear-gradient(120deg,#f1b826,#ffe974 45%,#dc9213);border-color:#b66d0e;box-shadow:0 0 18px #fff68c}.mole.gold:before,.mole.gold:after{background:#f0bd32;border-color:#b66d0e}.mole.gold .snout{background:#fff0a8}.mole.gold:after{box-shadow:0 0 13px #fff}
     .fuse{display:none}.mole.bomb{width:66%;height:72%;left:17%;bottom:-75%;border-radius:50%;background:radial-gradient(circle at 35% 28%,#62656b 0 7%,#292c32 24%,#111318 75%);border:5px solid #090b0e;box-shadow:inset -9px -10px 0 #0005;filter:drop-shadow(0 5px 3px #30492255)}.active .mole.bomb{bottom:10%}.mole.bomb:before,.mole.bomb:after{display:none}.mole.bomb .face,.mole.bomb .sparkles{display:none}.mole.bomb .fuse{display:block;position:absolute;width:38%;height:35%;left:59%;top:-27%;border-left:7px solid #493127;border-top:6px solid #493127;border-radius:60% 0 0 0}.mole.bomb .fuse:after{content:"✦";position:absolute;right:-11px;top:-15px;color:#fff59a;font-size:25px;text-shadow:0 0 5px #fff,0 0 10px #ff9f1a;animation:twinkle .25s infinite alternate}
     .sparkles{display:none}.gold .sparkles{display:block;position:absolute;inset:-14px;animation:twinkle .55s infinite alternate}.gold .sparkles:before{content:"✦";position:absolute;color:#fff;left:4%;top:18%;font-size:20px;text-shadow:35px -16px #fff6a9,72px 22px #fff,18px 69px #ffe45a}
@@ -69,7 +71,7 @@
     const activeHoles=new Set(),hideTimers=new Map();
     for(let i=0;i<9;i++){
       const hole=document.createElement('button'); hole.className='hole'; hole.type='button'; hole.setAttribute('aria-label',`${i+1}번 두더지 구멍`);
-      hole.innerHTML='<span class="mole"><span class="sparkles"></span><span class="fuse"></span><span class="face"><span class="eyes"></span><span class="snout"><span class="nose"></span><span class="mouth"></span></span></span></span><span class="dirt"></span>';
+      hole.innerHTML='<span class="mole"><span class="sparkles"></span><span class="fuse"></span><span class="face"><span class="eyes"></span><span class="snout"><span class="nose"></span><span class="mouth"></span><span class="teeth"></span><span class="whiskers"></span></span><span class="paws"></span></span></span><span class="dirt"></span>';
       hole.addEventListener('pointerdown',()=>hit(hole)); board.appendChild(hole);
     }
     const holes=[...document.querySelectorAll('.hole')];
@@ -79,9 +81,9 @@
     function maxMoles(){return time<=10?3:time<=20?2:1}
     function scheduleSpawn(){clearTimeout(spawnTimer);if(playing)spawnTimer=setTimeout(()=>{spawn();scheduleSpawn()},pace())}
     function spawn(){
-      if(!playing||activeHoles.size>=maxMoles())return; const available=holes.filter(h=>!activeHoles.has(h));if(!available.length)return;const hole=available[Math.floor(Math.random()*available.length)],bomb=Math.random()<.12,gold=!bomb&&Math.random()<.15,type=bomb?'bomb':gold?'gold':'normal',mole=hole.querySelector('.mole');
+      if(!playing||activeHoles.size>=maxMoles())return; const available=holes.filter(h=>!activeHoles.has(h));if(!available.length)return;const hole=available[Math.floor(Math.random()*available.length)],nextRound=round+1,bomb=nextRound%7===0||Math.random()<.08,gold=!bomb&&Math.random()<.15,type=bomb?'bomb':gold?'gold':'normal',mole=hole.querySelector('.mole');
       hole.classList.remove('hit'); mole.classList.remove('gold','bomb');
-      activeHoles.add(hole); round++; hole.dataset.round=round; hole.dataset.type=type; mole.classList.toggle('gold',gold); mole.classList.toggle('bomb',bomb); hole.setAttribute('aria-label',bomb?'폭탄! 누르지 마세요':gold?'황금 두더지':'일반 두더지'); hole.classList.add('active');
+      activeHoles.add(hole); round=nextRound; hole.dataset.round=round; hole.dataset.type=type; mole.classList.toggle('gold',gold); mole.classList.toggle('bomb',bomb); hole.setAttribute('aria-label',bomb?'폭탄! 누르지 마세요':gold?'황금 두더지':'일반 두더지'); hole.classList.add('active');
       hideTimers.set(hole,setTimeout(()=>clearHole(hole),Math.max(650,pace()*2.1)));
     }
     function hit(hole){
@@ -94,7 +96,7 @@
     }
     function startGame(){
       clearTimeout(spawnTimer);clearInterval(countdownTimer);document.querySelectorAll('.float-score').forEach(x=>x.remove());clearMoles();
-      score=0;time=30;playing=true;scoreEl.textContent='0';timeEl.textContent='30';overlay.classList.remove('show');startBtn.disabled=true;startBtn.textContent='게임 중!';spawn();
+      score=0;time=30;round=0;playing=true;scoreEl.textContent='0';timeEl.textContent='30';overlay.classList.remove('show');startBtn.disabled=true;startBtn.textContent='게임 중!';spawn();
       scheduleSpawn(); countdownTimer=setInterval(()=>{time--;timeEl.textContent=time;if(time<=0)endGame()},1000);
     }
     function endGame(){playing=false;clearTimeout(spawnTimer);clearInterval(countdownTimer);clearMoles();finalScore.textContent=score;overlay.classList.add('show');startBtn.disabled=false;startBtn.textContent='게임 시작!'}
