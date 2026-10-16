@@ -65,33 +65,39 @@
   </main>
   <script>
     const board=document.querySelector('#board'),scoreEl=document.querySelector('#score'),timeEl=document.querySelector('#time'),startBtn=document.querySelector('#start'),overlay=document.querySelector('#overlay'),restartBtn=document.querySelector('#restart'),finalScore=document.querySelector('#finalScore');
-    let score=0,time=30,playing=false,spawnTimer=null,countdownTimer=null,activeHole=null,round=0;
+    let score=0,time=30,playing=false,spawnTimer=null,countdownTimer=null,round=0;
+    const activeHoles=new Set(),hideTimers=new Map();
     for(let i=0;i<9;i++){
       const hole=document.createElement('button'); hole.className='hole'; hole.type='button'; hole.setAttribute('aria-label',`${i+1}번 두더지 구멍`);
       hole.innerHTML='<span class="mole"><span class="sparkles"></span><span class="fuse"></span><span class="face"><span class="eyes"></span><span class="snout"><span class="nose"></span><span class="mouth"></span></span></span></span><span class="dirt"></span>';
       hole.addEventListener('pointerdown',()=>hit(hole)); board.appendChild(hole);
     }
     const holes=[...document.querySelectorAll('.hole')];
-    function clearMole(){if(activeHole){activeHole.classList.remove('active','hit');activeHole.querySelector('.mole').classList.remove('gold','bomb');activeHole=null}}
+    function clearHole(hole){clearTimeout(hideTimers.get(hole));hideTimers.delete(hole);activeHoles.delete(hole);hole.classList.remove('active','hit');hole.querySelector('.mole').classList.remove('gold','bomb')}
+    function clearMoles(){holes.forEach(clearHole)}
+    function pace(){const elapsed=30-time;return Math.max(350,800-elapsed*15)}
+    function maxMoles(){return time<=10?3:time<=20?2:1}
+    function scheduleSpawn(){clearTimeout(spawnTimer);if(playing)spawnTimer=setTimeout(()=>{spawn();scheduleSpawn()},pace())}
     function spawn(){
-      if(!playing)return; clearMole(); const index=Math.floor(Math.random()*holes.length),hole=holes[index],bomb=Math.random()<.12,gold=!bomb&&Math.random()<.15,type=bomb?'bomb':gold?'gold':'normal',mole=hole.querySelector('.mole');
+      if(!playing||activeHoles.size>=maxMoles())return; const available=holes.filter(h=>!activeHoles.has(h));if(!available.length)return;const hole=available[Math.floor(Math.random()*available.length)],bomb=Math.random()<.12,gold=!bomb&&Math.random()<.15,type=bomb?'bomb':gold?'gold':'normal',mole=hole.querySelector('.mole');
       hole.classList.remove('hit'); mole.classList.remove('gold','bomb');
-      activeHole=hole; round++; hole.dataset.round=round; hole.dataset.type=type; mole.classList.toggle('gold',gold); mole.classList.toggle('bomb',bomb); hole.setAttribute('aria-label',bomb?'폭탄! 누르지 마세요':gold?'황금 두더지':'일반 두더지'); hole.classList.add('active');
+      activeHoles.add(hole); round++; hole.dataset.round=round; hole.dataset.type=type; mole.classList.toggle('gold',gold); mole.classList.toggle('bomb',bomb); hole.setAttribute('aria-label',bomb?'폭탄! 누르지 마세요':gold?'황금 두더지':'일반 두더지'); hole.classList.add('active');
+      hideTimers.set(hole,setTimeout(()=>clearHole(hole),Math.max(650,pace()*2.1)));
     }
     function hit(hole){
-      if(!playing||hole!==activeHole||!hole.classList.contains('active')||hole.classList.contains('hit'))return;
-      const type=hole.dataset.type,bomb=type==='bomb',gold=type==='gold',points=bomb?-20:gold?50:10; score=Math.max(0,score+points); scoreEl.textContent=score; hole.classList.add('hit'); hole.classList.remove('active'); activeHole=null;
+      if(!playing||!activeHoles.has(hole)||!hole.classList.contains('active')||hole.classList.contains('hit'))return;
+      clearTimeout(hideTimers.get(hole));hideTimers.delete(hole);activeHoles.delete(hole);const type=hole.dataset.type,bomb=type==='bomb',gold=type==='gold',points=bomb?-20:gold?50:10; score=Math.max(0,score+points); scoreEl.textContent=score; hole.classList.add('hit'); hole.classList.remove('active');
       const fx=document.createElement('span'); fx.className='float-score'+(gold?' bonus':''); fx.textContent=bomb?'💥 -20':gold?'✨ BONUS +50 ✨':'+10'; fx.style.left=(hole.offsetLeft+hole.offsetWidth/2)+'px'; fx.style.top=(hole.offsetTop+hole.offsetHeight*.42)+'px'; board.appendChild(fx); fx.addEventListener('animationend',()=>fx.remove());
       if(bomb){const wrap=document.querySelector('.board-wrap');wrap.classList.remove('boom');void wrap.offsetWidth;wrap.classList.add('boom');setTimeout(()=>wrap.classList.remove('boom'),380)}
       setTimeout(()=>hole.classList.remove('hit'),180);
       if(navigator.vibrate)navigator.vibrate(bomb?[60,30,80]:gold?[25,30,25]:18);
     }
     function startGame(){
-      clearInterval(spawnTimer);clearInterval(countdownTimer);document.querySelectorAll('.float-score').forEach(x=>x.remove());clearMole();
+      clearTimeout(spawnTimer);clearInterval(countdownTimer);document.querySelectorAll('.float-score').forEach(x=>x.remove());clearMoles();
       score=0;time=30;playing=true;scoreEl.textContent='0';timeEl.textContent='30';overlay.classList.remove('show');startBtn.disabled=true;startBtn.textContent='게임 중!';spawn();
-      spawnTimer=setInterval(spawn,800); countdownTimer=setInterval(()=>{time--;timeEl.textContent=time;if(time<=0)endGame()},1000);
+      scheduleSpawn(); countdownTimer=setInterval(()=>{time--;timeEl.textContent=time;if(time<=0)endGame()},1000);
     }
-    function endGame(){playing=false;clearInterval(spawnTimer);clearInterval(countdownTimer);clearMole();finalScore.textContent=score;overlay.classList.add('show');startBtn.disabled=false;startBtn.textContent='게임 시작!'}
+    function endGame(){playing=false;clearTimeout(spawnTimer);clearInterval(countdownTimer);clearMoles();finalScore.textContent=score;overlay.classList.add('show');startBtn.disabled=false;startBtn.textContent='게임 시작!'}
     startBtn.addEventListener('click',startGame);restartBtn.addEventListener('click',startGame);
   </script>
 </body>
