@@ -78,7 +78,7 @@
       hole.addEventListener('pointerdown',()=>hit(hole)); board.appendChild(hole);
     }
     const holes=[...document.querySelectorAll('.hole')];
-    function clearHole(hole){clearTimeout(hideTimers.get(hole));hideTimers.delete(hole);activeHoles.delete(hole);hole.classList.remove('active','hit');const mole=hole.querySelector('.mole');setTimeout(()=>{if(!activeHoles.has(hole))mole.classList.remove('gold','bomb')},240)}
+    function clearHole(hole){clearTimeout(hideTimers.get(hole));hideTimers.delete(hole);activeHoles.delete(hole);hole.classList.remove('active','hit')}
     function clearMoles(){holes.forEach(clearHole)}
     function pace(){const elapsed=30-time;return Math.max(250,650-elapsed*14)}
     function maxMoles(){return time<=10?3:time<=20?2:1}
@@ -94,7 +94,7 @@
       clearTimeout(hideTimers.get(hole));hideTimers.delete(hole);activeHoles.delete(hole);const type=hole.dataset.type,bomb=type==='bomb',gold=type==='gold',points=bomb?-20:gold?50:10; score=Math.max(0,score+points); scoreEl.textContent=score; hole.classList.add('hit'); hole.classList.remove('active');
       const fx=document.createElement('span'); fx.className='float-score'+(gold?' bonus':''); fx.textContent=bomb?'💥 -20':gold?'✨ BONUS +50 ✨':'+10'; fx.style.left=(hole.offsetLeft+hole.offsetWidth/2)+'px'; fx.style.top=(hole.offsetTop+hole.offsetHeight*.42)+'px'; board.appendChild(fx); fx.addEventListener('animationend',()=>fx.remove());
       if(bomb){const wrap=document.querySelector('.board-wrap');wrap.classList.remove('boom');void wrap.offsetWidth;wrap.classList.add('boom');setTimeout(()=>wrap.classList.remove('boom'),380)}
-      setTimeout(()=>hole.classList.remove('hit'),180);
+      setTimeout(()=>hole.classList.remove('hit'),230);
       if(navigator.vibrate)navigator.vibrate(bomb?[60,30,80]:gold?[25,30,25]:18);
     }
     function startGame(){
