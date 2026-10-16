@@ -10,9 +10,9 @@
     :root{--ink:#4f3828;--cream:#fff8df;--green:#79cf69;--green2:#b7e77b;--brown:#67402e;--orange:#ff8b43;--yellow:#ffd84d}
     *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
     html,body{margin:0;width:100%;height:100%;font-family:'Jua','Arial Rounded MT Bold',sans-serif;color:var(--ink);overflow:hidden}
-    body{height:100svh;background:linear-gradient(#b9ebff 0 25%,#b3e87c 25% 100%);display:grid;place-items:center;padding:10px;user-select:none}
+    body{height:100dvh;background:linear-gradient(#b9ebff 0 25%,#b3e87c 25% 100%);display:grid;place-items:center;padding:max(6px,env(safe-area-inset-top)) max(6px,env(safe-area-inset-right)) max(6px,env(safe-area-inset-bottom)) max(6px,env(safe-area-inset-left));user-select:none}
     body:before{content:"";position:fixed;inset:20% 0 auto;height:70px;background:radial-gradient(ellipse at 10% 100%,#fff 0 23%,transparent 24%),radial-gradient(ellipse at 24% 100%,#fff 0 27%,transparent 28%),radial-gradient(ellipse at 90% 100%,#fff 0 23%,transparent 24%),radial-gradient(ellipse at 75% 100%,#fff 0 27%,transparent 28%);opacity:.75;pointer-events:none}
-    .game{position:relative;width:min(620px,100%);height:min(820px,calc(100svh - 20px));z-index:1;display:flex;flex-direction:column;min-height:0}
+    .game{position:relative;width:min(620px,100%);height:min(820px,100%);z-index:1;display:flex;flex-direction:column;min-height:0}
     header{text-align:center;margin-bottom:10px}
     h1{margin:0;color:#fff;font-size:clamp(2.2rem,8vw,4rem);letter-spacing:2px;text-shadow:0 5px 0 #6aaf51,0 8px 16px #4a9a5866;-webkit-text-stroke:2px #5f963f}
     .tag{display:inline-block;background:#fff8dfcc;padding:5px 16px;border-radius:30px;font-size:.95rem;box-shadow:0 3px 0 #82b85b;margin-top:4px}
@@ -46,7 +46,7 @@
     .countdown{position:absolute;inset:0;z-index:25;display:grid;place-items:center;background:#357b3973;backdrop-filter:blur(2px);border-radius:33px;opacity:0;pointer-events:none;transition:.18s}.countdown.show{opacity:1}.countdown strong{display:grid;place-items:center;width:clamp(110px,30vw,170px);aspect-ratio:1;border-radius:50%;background:#fff8df;border:7px solid #fff;color:#ef6939;font-size:clamp(4.5rem,18vw,7rem);line-height:1;box-shadow:0 10px 0 #e0a14c,0 16px 30px #315f3455;animation:countPop .65s ease-out}.countdown strong.go{width:auto;aspect-ratio:auto;padding:24px 35px;border-radius:35px;font-size:clamp(2.5rem,12vw,5rem)}@keyframes countPop{0%{transform:scale(.35);opacity:0}45%{transform:scale(1.12)}100%{transform:scale(1);opacity:1}}
     .overlay.show{opacity:1;pointer-events:auto}.card{text-align:center;background:#fff8df;border:5px solid #fff;border-radius:30px;padding:25px 30px;box-shadow:0 9px 0 #e0a14c;transform:scale(.85);transition:.3s}.show .card{transform:scale(1)}.card h2{margin:0 0 6px;font-size:2rem;color:#ef6939}.card p{margin:5px 0 18px;font-size:1.15rem}.final{font-size:2.1rem;color:#6eb04e}
     .flowers{position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(circle at 12% 72%,#fff 0 5px,transparent 6px),radial-gradient(circle at 85% 42%,#ffe750 0 5px,transparent 6px),radial-gradient(circle at 92% 80%,#fff 0 4px,transparent 5px),radial-gradient(circle at 4% 45%,#ffe750 0 4px,transparent 5px);opacity:.9}
-    @media(max-width:480px){body{padding:6px}.game{height:calc(100svh - 12px)}.board-wrap{padding:10px 10px 16px;border-radius:28px}.board{gap:6px}.mole{border-width:3px}.mole:before,.mole:after{border-width:3px}.hud{gap:7px;margin:4px 0 7px}.stat{padding:6px 9px;border-width:3px}.stat strong{font-size:1.2rem}h1{font-size:2.25rem;line-height:1}.tag{font-size:.75rem;padding:3px 12px}.controls{margin:4px 0 7px;min-height:50px}.controls .main{font-size:1.25rem;padding:10px 32px}}
+    @media(max-width:480px){.game{height:100%}.board-wrap{padding:10px 10px 16px;border-radius:28px}.board{gap:6px}.mole{border-width:3px}.mole:before,.mole:after{border-width:3px}.mole.bomb{width:62%;height:60%;left:19%;bottom:-105%}.active .mole.bomb{bottom:4%}.mole.bomb .fuse{top:-20%}.mole.bomb .fuse:after{font-size:18px;top:-8px;right:-6px}.hud{gap:7px;margin:4px 0 7px}.stat{padding:6px 9px;border-width:3px}.stat strong{font-size:1.2rem}h1{font-size:2.25rem;line-height:1}.tag{font-size:.75rem;padding:3px 12px}.controls{margin:4px 0 7px;min-height:50px}.controls .main{font-size:1.25rem;padding:10px 32px}}
     @media(max-height:700px){header{margin-bottom:2px}.tag{display:none}h1{font-size:2.1rem}.controls{margin:3px 0 5px;min-height:46px}.controls .main{padding:8px 30px}.hud{margin:3px auto 6px}.stat{padding:4px 9px}.board-wrap{padding-top:8px;padding-bottom:14px}}
     @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
   </style>
@@ -69,7 +69,7 @@
     </section>
   </main>
   <script>
-    const board=document.querySelector('#board'),scoreEl=document.querySelector('#score'),timeEl=document.querySelector('#time'),startBtn=document.querySelector('#start'),overlay=document.querySelector('#overlay'),restartBtn=document.querySelector('#restart'),finalScore=document.querySelector('#finalScore'),readyCountdown=document.querySelector('#readyCountdown'),readyNumber=document.querySelector('#readyNumber');
+    const board=document.querySelector('#board'),boardWrap=document.querySelector('.board-wrap'),scoreEl=document.querySelector('#score'),timeEl=document.querySelector('#time'),startBtn=document.querySelector('#start'),overlay=document.querySelector('#overlay'),restartBtn=document.querySelector('#restart'),finalScore=document.querySelector('#finalScore'),readyCountdown=document.querySelector('#readyCountdown'),readyNumber=document.querySelector('#readyNumber');
     let score=0,time=30,playing=false,starting=false,spawnTimer=null,countdownTimer=null,readyTimer=null,round=0;
     const activeHoles=new Set(),hideTimers=new Map();
     for(let i=0;i<9;i++){
@@ -78,6 +78,8 @@
       hole.addEventListener('pointerdown',()=>hit(hole)); board.appendChild(hole);
     }
     const holes=[...document.querySelectorAll('.hole')];
+    function fitBoard(){const s=getComputedStyle(boardWrap),w=boardWrap.clientWidth-parseFloat(s.paddingLeft)-parseFloat(s.paddingRight),h=boardWrap.clientHeight-parseFloat(s.paddingTop)-parseFloat(s.paddingBottom),fitH=Math.max(0,Math.min(h,w/1.05));board.style.width=(fitH*1.05)+'px';board.style.height=fitH+'px'}
+    if('ResizeObserver' in window)new ResizeObserver(fitBoard).observe(boardWrap);else window.addEventListener('resize',fitBoard);if(window.visualViewport)visualViewport.addEventListener('resize',fitBoard);window.addEventListener('orientationchange',()=>setTimeout(fitBoard,100));requestAnimationFrame(fitBoard);
     function clearHole(hole){clearTimeout(hideTimers.get(hole));hideTimers.delete(hole);activeHoles.delete(hole);hole.classList.remove('active','hit')}
     function clearMoles(){holes.forEach(clearHole)}
     function pace(){const elapsed=30-time;return Math.max(250,650-elapsed*14)}
