@@ -77,14 +77,14 @@
     const holes=[...document.querySelectorAll('.hole')];
     function clearHole(hole){clearTimeout(hideTimers.get(hole));hideTimers.delete(hole);activeHoles.delete(hole);hole.classList.remove('active','hit');hole.querySelector('.mole').classList.remove('gold','bomb')}
     function clearMoles(){holes.forEach(clearHole)}
-    function pace(){const elapsed=30-time;return Math.max(350,800-elapsed*15)}
+    function pace(){const elapsed=30-time;return Math.max(250,650-elapsed*14)}
     function maxMoles(){return time<=10?3:time<=20?2:1}
     function scheduleSpawn(){clearTimeout(spawnTimer);if(playing)spawnTimer=setTimeout(()=>{spawn();scheduleSpawn()},pace())}
     function spawn(){
       if(!playing||activeHoles.size>=maxMoles())return; const available=holes.filter(h=>!activeHoles.has(h));if(!available.length)return;const hole=available[Math.floor(Math.random()*available.length)],nextRound=round+1,bomb=nextRound%7===0||Math.random()<.08,gold=!bomb&&Math.random()<.15,type=bomb?'bomb':gold?'gold':'normal',mole=hole.querySelector('.mole');
       hole.classList.remove('hit'); mole.classList.remove('gold','bomb');
       activeHoles.add(hole); round=nextRound; hole.dataset.round=round; hole.dataset.type=type; mole.classList.toggle('gold',gold); mole.classList.toggle('bomb',bomb); hole.setAttribute('aria-label',bomb?'폭탄! 누르지 마세요':gold?'황금 두더지':'일반 두더지'); hole.classList.add('active');
-      hideTimers.set(hole,setTimeout(()=>clearHole(hole),Math.max(650,pace()*2.1)));
+      hideTimers.set(hole,setTimeout(()=>clearHole(hole),Math.max(550,pace()*2.1)));
     }
     function hit(hole){
       if(!playing||!activeHoles.has(hole)||!hole.classList.contains('active')||hole.classList.contains('hit'))return;
