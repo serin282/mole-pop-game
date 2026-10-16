@@ -78,7 +78,7 @@
       hole.addEventListener('pointerdown',()=>hit(hole)); board.appendChild(hole);
     }
     const holes=[...document.querySelectorAll('.hole')];
-    function clearHole(hole){clearTimeout(hideTimers.get(hole));hideTimers.delete(hole);activeHoles.delete(hole);hole.classList.remove('active','hit');hole.querySelector('.mole').classList.remove('gold','bomb')}
+    function clearHole(hole){clearTimeout(hideTimers.get(hole));hideTimers.delete(hole);activeHoles.delete(hole);hole.classList.remove('active','hit');const mole=hole.querySelector('.mole');setTimeout(()=>{if(!activeHoles.has(hole))mole.classList.remove('gold','bomb')},240)}
     function clearMoles(){holes.forEach(clearHole)}
     function pace(){const elapsed=30-time;return Math.max(250,650-elapsed*14)}
     function maxMoles(){return time<=10?3:time<=20?2:1}
